@@ -63,8 +63,26 @@ function uploadFileToAWS(){
 
 }
 
-uploadFileToAWS();
+function downloadingFileFromAWS(){
+    let key = "VIDEO_LIVE_LECTURE_1.png";
 
+    s3 = new AWS.S3({apiVersion: '2006-03-01'});
+
+    var params = {
+        Key: key,
+        Bucket: "task-demo-1"
+    }
+
+    s3.getObject(params, function(err, data) {
+        if (err) {
+            throw err
+        }
+        fs.writeFileSync('./download/'+key, data.Body);
+        console.log('file downloaded successfully');
+    })
+}
+
+downloadingFileFromAWS();
 
 
 
